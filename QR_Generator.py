@@ -45,7 +45,7 @@ def main():
 
     soup = BeautifulSoup(page_source, features='lxml')
 
-    div = soup.find('div', {'class': 'qrCode-wG6ZgU'})
+    div = soup.find('div', {'class': 'qrCode-2R7t9S'})
     qr_code = div.find('img')['src']
     file = os.path.join(os.getcwd(), 'dump.png')
 
